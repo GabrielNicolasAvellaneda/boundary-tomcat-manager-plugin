@@ -1,32 +1,55 @@
 {
-    "description": "A simple test plugin for the LUA framework",
+    "description": "A Boundary plugin for Tomcat Manager App status page metrics",
     "icon" : "icon.png",
     "command": "boundary-meter index.lua",
-    "metrics" : ["BOUNDARY_LUA_SAMPLE"],
+    "metrics" : ["TOMCAT_JVM_FREE_MEMORY", "TOMCAT_JVM_TOTAL_MEMORY", "TOMCAT_JVM_MAX_MEMORY"],
     "postExtract" : "",
     "paramSchema": [
+   		{
+   			"title": "Host",
+   			"name": "host",
+   			"description": "Host where Apache Tomcat is running",
+   			"type": "string",
+   			"default": "localhost",
+   			"required": true
+		},
+		{
+			"title": "Port",
+			"name": "port",
+			"description": "Port where Apache Tomcat is running",
+			"default": "8080",
+			"required": true
+		},
+		{
+			"title": "Path",
+			"name": "path",
+			"description", "Path to the Tomcat Manager App status page (ie. /manager/status).",
+			"type": "string",
+			"default": "/manager/status",
+			"required": true
+		},
+   		{
+   			"title": "Username",
+   			"name": "username",
+   			"description": "Username with access to the Tomcat Manager App
+   			"type": "string",
+   			"default": "admin",
+   			"required": true
+		},
+		{
+			"title": "Password",
+			"name": "password",
+			"description": "Password for the Tomcat Mannager App",
+			"type": "string",
+			"default": "password",
+			"required": true
+		},
         {
-            "title": "Min val",
-            "name": "minValue",
-            "description": "The minimum random value",
-            "type": "string",
-            "default": 1,
-            "required": false
-        },
-        {
-            "title": "Max val",
-            "name": "maxValue",
-            "description": "The maximum random value",
-            "type": "string",
-            "default": 10,
-            "required": false
-        },
-        {
-            "title": "Poll Time (sec)",
+            "title": "Poll Time (ms),
             "name": "pollInterval",
             "description": "The Poll Interval to call the command. Defaults 5 seconds",
             "type": "string",
-            "default": 5,
+            "default": 5000,
             "required": false
         }
     ]

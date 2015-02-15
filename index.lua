@@ -1,18 +1,122 @@
 local boundary = require('boundary')
+local http = require('http')
+local base64 = require('./modules/mime')
+local timer = require('timer')
+local string = require('string')
+local table = require('table')
+local os = require('os')
+local fs = require('fs')
 
-local pollInterval = 1000
-local minValue = 1
-local maxValue = 10
+-- default parameter values
+local host = 'localhost'
+local port = 8080
+local path = '/manager/status/all'
+local username = 'admin'
+local password = 'password'
+local source = os.hostname()
+local pollInterval = 5000
 
+-- try to get parameters from plugin instance
 if (boundary.param ~= nil) then
-  pollInterval = boundary.param['pollInterval'] or pollInterval
-  minValue = boundary.param['minValue'] or minValue
-  maxValue = boundary.param['maxValue'] or maxValue
+ host = boundary.param['host'] or host
+ port = boundary.param['port'] or port
+ path = boundary.param['path'] or path
+ username = boundary.param['username'] or username
+ password = boundary.param['password'] or password
+ pollInterval = boundary.param['pollInterval'] or pollInterval
+ source = boundary.param['source'] or source
 end
 
-print("_bevent:Boundary LUA Sample plugin up : version 1.0|t:info|tags:lua,plugin")
+print("_bevent:Boundary Tomcat Manager Status plugin : version 1.0|t:info|tags:tomcat,plugin")
 
-local timer = require('timer')
-timer.setInterval(pollInterval, function ()
-	print(string.format("BOUNDARY_LUA_SAMPLE %f", math.random(minValue, maxValue)))
-end)
+-- Some helper functions
+function base64Encode(s)                                                      
+	return base64.b64(s)                                                      
+end                                                                           
+
+function isEmpty(s)
+	return s == '' or s == nil
+end
+
+function currentTimestamp()
+	return os.time()
+end
+
+function authHeader(username, password)                                       
+	return {Authorization = 'Basic ' .. 
+				base64Encode(username .. ':' .. password)}
+end                                                                           
+
+function parse(data)
+	local vals = {}
+
+	vals['TOMCAT_JVM_FREE_MEMORY'] = 1234
+	vals['TOMCAT_JVM_TOTAL_MEMORY'] = 1234
+	vals['TOMCAT_JVM_MAX_MEMORY'] = 1234
+
+	return vals
+end
+
+local headers = {}
+if not isEmpty(username) then
+	headers = authHeader(username, password)
+end
+
+local reqOptions = {                                                         
+	host = host,                                                             
+ 	port = port,                                                             
+ 	path = path,                                                             
+ 	headers = headers
+}
+
+function poll()
+
+	getStatus(reqOptions,
+		function (data)
+			local vals = parse(data)
+			report(vals, source, currentTimestamp())
+		end)
+	timer.setTimeout(pollInterval, poll)
+end
+
+function formatMetric(metric, value, source, timestamp)
+	return string.format('%s %d %s %s', metric, value, source, timestamp)
+end
+
+function report(metrics, source, timestamp)
+	for metric, value in pairs(metrics) do
+		print(formatMetric(metric, value, source, timestamp))
+	end
+end
+
+function getStatus(reqOptions, successFunc)                                 
+	local req = http.request(                                           
+		reqOptions,                                                         
+		function (res)                                                      
+			local data = ''                                             
+	                        	                                                                                            
+	        res:on('error', function(err)                               
+	        	msg = tostring(err)                                 
+	        	print('Error while receiving a response: ' .. msg)  
+	        end)                                                        
+	                        	                                	                                                                                                                                            
+	        res:on('data', function(chunk)                              
+	        	data = data .. chunk                                
+	        end)                                                        
+	        
+	       	res:on('end', function()                                    
+	       		successFunc(data)                                   
+	       	end)                                                        
+	       
+		end)                                                                
+	      
+	req:on('error', function(err)                                       
+		msg = tostring(err)                                         
+	   	print('Error while sending a request: ' .. msg)             
+	end)                                                                
+	     
+	req:done()                                                          
+end 
+
+-- Start pooling for metrics
+poll()

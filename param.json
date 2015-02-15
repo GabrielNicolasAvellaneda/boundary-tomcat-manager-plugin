@@ -1,5 +1,8 @@
 {
-	"pollInterval":5000,
-	"minValue":1,
-	"maxValue":10
+	"host": "localhost",
+	"port": "8080",
+	"path": "/manager/status/all",
+	"username": "admin",
+	"password": "password",
+	"pollInterval":5000
 }
