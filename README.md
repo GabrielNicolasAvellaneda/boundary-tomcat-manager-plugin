@@ -1,4 +1,4 @@
-# boundary-plugin-lua-test
+# boundary-tomcat-manager-plugin
 
 A Boundary plugin that extracts Tomcat metrics from the default manager app.
 
