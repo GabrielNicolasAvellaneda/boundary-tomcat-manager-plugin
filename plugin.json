@@ -31,7 +31,7 @@
    		{
    			"title": "Username",
    			"name": "username",
-   			"description": "Username with access to the Tomcat Manager App
+   			"description": "Username with access to the Tomcat Manager App",
    			"type": "string",
    			"default": "admin",
    			"required": true
@@ -45,7 +45,7 @@
 			"required": true
 		},
         {
-            "title": "Poll Time (ms),
+            "title": "Poll Time (ms)",
             "name": "pollInterval",
             "description": "The Poll Interval to call the command. Defaults 5 seconds",
             "type": "string",
