@@ -6,6 +6,8 @@ local string = require('string')
 local table = require('table')
 local os = require('os')
 local fs = require('fs')
+local parser = require('./modules/parser')
+local math = require('math')
 
 -- default parameter values
 local host = 'localhost'
@@ -42,17 +44,22 @@ function currentTimestamp()
 	return os.time()
 end
 
+function round(val, decimal)
+	if (decimal) then
+		return math.floor( (val * 10^decimal) + 0.5) / (10^decimal)
+	else
+	    return math.floor(val+0.5)
+	end
+end
+
 function authHeader(username, password)                                       
 	return {Authorization = 'Basic ' .. 
 				base64Encode(username .. ':' .. password)}
 end                                                                           
 
 function parse(data)
-	local vals = {}
 
-	vals['TOMCAT_JVM_FREE_MEMORY'] = 1234
-	vals['TOMCAT_JVM_TOTAL_MEMORY'] = 1234
-	vals['TOMCAT_JVM_MAX_MEMORY'] = 1234
+	local vals = parser.parse(data) 
 
 	return vals
 end
@@ -80,7 +87,7 @@ function poll()
 end
 
 function formatMetric(metric, value, source, timestamp)
-	return string.format('%s %d %s %s', metric, value, source, timestamp)
+	return string.format('%s %1.2f %s %s', metric, round(value, 2), source, timestamp)
 end
 
 function report(metrics, source, timestamp)
