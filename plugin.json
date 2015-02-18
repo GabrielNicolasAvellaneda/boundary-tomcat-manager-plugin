@@ -27,7 +27,7 @@
 		{
 			"title": "Path",
 			"name": "path",
-			"description", "Path to the Tomcat Manager App status page (ie. /manager/status).",
+			"description": "Path to the Tomcat Manager App status page (ie. /manager/status).",
 			"type": "string",
 			"default": "/manager/status",
 			"required": true
