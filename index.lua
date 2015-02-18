@@ -1,3 +1,6 @@
+-- [boundary.com] Tomcat Metrics using default Manager Web Application
+-- [author] Gabriel Nicolas Avellaneda <avellaneda.gabriel@gmail.com>
+
 local boundary = require('boundary')
 local http = require('http')
 local base64 = require('./modules/mime')
