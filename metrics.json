@@ -1,5 +1,5 @@
 {
-  "results": [
+  "result": [
   {
     "name": "TOMCAT_JVM_FREE_MEMORY",
     "displayName": "JVM Free Memory",
