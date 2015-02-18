@@ -45,3 +45,8 @@ Tracks the following metrics for [Tomcat](http://tomcat.apache.org/)
 |TOMCAT_HTTP_ERROR_COUNT| Total numbers of errors counter|
 |TOMCAT_HTTP_BYTES_SENT| Total bytes sent in MB|
 |TOMCAT_HTTP_BYTES_RECEIVED| Total bytes received in MB|
+|TOMCAT_MEMPOOL_HEAP_EDEN_SPACE| Eden Space Heap memory pool usage (%)|
+|TOMCAT_MEMPOOL_HEAP_CMS_OLD_GEN| CMS Old Gen Heap memory pool usage (%)|
+|TOMCAT_MEMPOOL_HEAP_SURVIVOR_SPACE| Survivor Space memory pool usage (%)|
+|TOMCAT_MEMPOOL_NONHEAP_CMS_PERM_GEN| CMS Perm Gen Non-heap memory pool usage (%)|_
+|TOMCAT_MEMPOOL_NONHEAP_CODE_CACHE| Code Cache memory pool usage (%)|

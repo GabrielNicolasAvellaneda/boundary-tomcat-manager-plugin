@@ -15,6 +15,11 @@ function should_parse_metrics()
 	assert(vals['TOMCAT_HTTP_ERROR_COUNT'] == 1)
 	assert(vals['TOMCAT_HTTP_BYTES_SENT'] == 0.81)
 	assert(vals['TOMCAT_HTTP_BYTES_RECEIVED'] == 0.00)
+	assert(vals['TOMCAT_MEMPOOL_HEAP_CMS_OLD_GEN'] == 16)
+	assert(vals['TOMCAT_MEMPOOL_HEAP_EDEN_SPACE'] == 0)
+	assert(vals['TOMCAT_MEMPOOL_HEAP_SURVIVOR_SPACE'] == 0)
+	assert(vals['TOMCAT_MEMPOOL_NONHEAP_CMS_PERM_GEN'] == 15)
+	assert(vals['TOMCAT_MEMPOOL_NONHEAP_CODE_CACHE'] == 8)
 
 end
 

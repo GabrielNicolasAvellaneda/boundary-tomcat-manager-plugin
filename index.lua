@@ -12,7 +12,7 @@ local math = require('math')
 -- default parameter values
 local host = 'localhost'
 local port = 8080
-local path = '/manager/status/all'
+local path = '/manager/status'
 local username = 'admin'
 local password = 'password'
 local source = os.hostname()
