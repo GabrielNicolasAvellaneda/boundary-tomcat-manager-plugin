@@ -36,7 +36,7 @@
     "name": "TOMCAT_HTTP_MAX_PROCESSING_TIME",
     "displayName": "Max Processing Time Reached",
     "description": "Maximum processing time reached for request (ms).",
-    "unit": "number",
+    "unit": "duration",
     "displayNameShort": "Max Processing Time",
     "defaultAggregate": "max"
   },
