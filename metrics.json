@@ -51,7 +51,7 @@
   {
     "name": "TOMCAT_HTTP_ERROR_COUNT",
     "displayName": "Tomcat Requests Error Count",
-    "description": "Total number of errors informed by the Tomcat Http Worker process.l",
+    "description": "Total number of errors informed by the Tomcat Http Worker process.",
     "unit": "number",
     "displayNameShort": "Error Count",
     "defaultAggregate": "max"
