@@ -3,13 +3,13 @@
 
 local boundary = require('boundary')
 local http = require('http')
-local base64 = require('./modules/mime')
+local base64 = require('mimeutils')
 local timer = require('timer')
 local string = require('string')
 local table = require('table')
 local os = require('os')
 local fs = require('fs')
-local parser = require('./modules/parser')
+local parser = require('parser')
 local math = require('math')
 
 -- default parameter values
@@ -36,7 +36,7 @@ print("_bevent:Boundary Tomcat Manager Status plugin : version 1.0|t:info|tags:t
 
 -- Some helper functions
 function base64Encode(s)                                                      
-	return base64.b64(s)                                                      
+	return base64.encode(s)                                                      
 end                                                                           
 
 function isEmpty(s)
