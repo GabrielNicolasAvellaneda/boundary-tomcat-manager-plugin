@@ -33,7 +33,8 @@
             "description": "Port where Apache Tomcat is running",
             "name": "port",
             "required": true,
-            "title": "Port"
+            "title": "Port",
+            "type": "string"
         },
         {
             "default": "/manager/status",
@@ -63,7 +64,7 @@
             "default": 5000,
             "description": "The Poll Interval to call the command. Defaults 5 seconds",
             "name": "pollInterval",
-            "required": false,
+            "required": true,
             "title": "Poll Time (ms)",
             "type": "string"
         }
